@@ -1,5 +1,6 @@
 package com.chennann.dorm.service;
 
+import com.chennann.dorm.pojo.WaterBill;
 import com.chennann.dorm.pojo.WaterOrder;
 
 import java.security.NoSuchAlgorithmException;
@@ -15,4 +16,8 @@ public interface WaterService {
     List<WaterOrder> listWaterOrder(Integer waterStationId, Integer state);
 
     void cancel(WaterOrder waterOrder);
+
+    List<WaterBill> monthlyBillGenerator();
+
+    void insertBills(List<WaterBill> waterBillList);
 }

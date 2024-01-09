@@ -1,5 +1,6 @@
 package com.chennann.dorm.mapper;
 
+import com.chennann.dorm.pojo.WaterBill;
 import com.chennann.dorm.pojo.WaterOrder;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -23,4 +24,9 @@ public interface WaterMapper {
 
     @Delete("delete from waterOrder where waterOrderId=#{waterOrderId} and waterOrderNumber=#{waterOrderNumber}")
     void cancel(WaterOrder waterOrder);
+
+    @Select("select dormNumber, waterStationId, sum(waterCount) as waterCount, sum(waterCount) * (select waterPrice from waterStation where waterStation.waterStationId = waterOrder.waterStationId) as totalPrice from waterOrder where waterOrderStatus='已完成' group by dormNumber, waterStationId")
+    List<WaterBill> monthlyBillGenerator();
+
+    void insertBills(List<WaterBill> waterBillList);
 }
